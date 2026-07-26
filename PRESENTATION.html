@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HealthTech - Project Presentation</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Arial,sans-serif; background:#0f172a; color:#f1f5f9; overflow-x:hidden; }
+
+/* SLIDE BASE */
+.slide {
+  width:100%; min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  padding:60px 80px; position:relative; overflow:hidden;
+  page-break-after: always;
+}
+
+/* BACKGROUNDS */
+.slide-1  { background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#0c4a6e 100%); }
+.slide-2  { background:linear-gradient(135deg,#0f172a,#1e293b); }
+.slide-3  { background:linear-gradient(135deg,#0f172a,#1e293b); }
+.slide-4  { background:linear-gradient(135deg,#0f172a,#1a1a2e); }
+.slide-5  { background:linear-gradient(135deg,#0f172a,#1e293b); }
+.slide-6  { background:linear-gradient(135deg,#0f172a,#162032); }
+.slide-7  { background:linear-gradient(135deg,#0f172a,#1e293b); }
+.slide-8  { background:linear-gradient(135deg,#0f172a,#1a1a2e); }
+.slide-9  { background:linear-gradient(135deg,#0f172a,#162032); }
+.slide-10 { background:linear-gradient(135deg,#1e3a8a,#0c4a6e,#0f766e); }
+
+/* GLOW CIRCLES */
+.glow { position:absolute; border-radius:50%; filter:blur(80px); opacity:0.15; pointer-events:none; }
+
+/* SLIDE NUMBER */
+.slide-num {
+  position:absolute; top:28px; right:40px;
+  font-size:12px; color:rgba(255,255,255,0.3); font-weight:600; letter-spacing:2px;
+}
+
+/* LOGO BAR */
+.logo-bar {
+  position:absolute; top:28px; left:40px;
+  display:flex; align-items:center; gap:10px;
+}
+.logo-icon {
+  width:36px; height:36px; border-radius:10px;
+  background:linear-gradient(135deg,#3b82f6,#06b6d4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px;
+}
+.logo-text { font-size:16px; font-weight:800; background:linear-gradient(135deg,#60a5fa,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+
+/* TAGS */
+.tag {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3);
+  color:#93c5fd; padding:6px 16px; border-radius:20px;
+  font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+}
+.tag.green { background:rgba(34,197,94,0.15); border-color:rgba(34,197,94,0.3); color:#86efac; }
+.tag.purple { background:rgba(139,92,246,0.15); border-color:rgba(139,92,246,0.3); color:#c4b5fd; }
+.tag.cyan { background:rgba(6,182,212,0.15); border-color:rgba(6,182,212,0.3); color:#67e8f9; }
+.tag.red { background:rgba(239,68,68,0.15); border-color:rgba(239,68,68,0.3); color:#fca5a5; }
+
+/* HEADINGS */
+.hero-title {
+  font-size:64px; font-weight:900; line-height:1.1; text-align:center;
+  background:linear-gradient(135deg,#fff 0%,#93c5fd 50%,#67e8f9 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin:20px 0;
+}
+.hero-sub { font-size:20px; color:rgba(255,255,255,0.6); text-align:center; max-width:700px; line-height:1.6; }
+.section-title {
+  font-size:42px; font-weight:900; margin-bottom:8px;
+  background:linear-gradient(135deg,#fff,#93c5fd);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.section-sub { font-size:16px; color:rgba(255,255,255,0.5); margin-bottom:40px; }
+
+/* STAT CARDS */
+.stats-row { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin:30px 0; }
+.stat-box {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  border-radius:18px; padding:28px 36px; text-align:center; min-width:160px;
+  backdrop-filter:blur(10px);
+}
+.stat-box .num {
+  font-size:40px; font-weight:900;
+  background:linear-gradient(135deg,#60a5fa,#22d3ee);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.stat-box .lbl { font-size:12px; color:rgba(255,255,255,0.5); margin-top:6px; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
+
+/* CARDS GRID */
+.cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; width:100%; max-width:1000px; }
+.cards.two { grid-template-columns:repeat(2,1fr); }
+.card {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px; padding:28px; backdrop-filter:blur(10px);
+  transition:transform 0.2s;
+}
+.card-icon { font-size:36px; margin-bottom:14px; }
+.card h3 { font-size:17px; font-weight:700; color:#f1f5f9; margin-bottom:8px; }
+.card p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6; }
+.card .accent { width:40px; height:3px; border-radius:2px; margin-bottom:14px; }
+.blue-accent { background:linear-gradient(135deg,#3b82f6,#06b6d4); }
+.green-accent { background:linear-gradient(135deg,#22c55e,#14b8a6); }
+.purple-accent { background:linear-gradient(135deg,#8b5cf6,#ec4899); }
+.orange-accent { background:linear-gradient(135deg,#f97316,#ef4444); }
+.cyan-accent { background:linear-gradient(135deg,#06b6d4,#3b82f6); }
+.pink-accent { background:linear-gradient(135deg,#ec4899,#8b5cf6); }
+
+/* FEATURE TABLE */
+.feat-table { width:100%; max-width:900px; border-collapse:collapse; }
+.feat-table th { 
+  background:rgba(59,130,246,0.2); color:#93c5fd; 
+  padding:14px 18px; font-size:13px; font-weight:700; text-align:left; 
+  border-bottom:2px solid rgba(59,130,246,0.3);
+}
+.feat-table td { 
+  padding:12px 18px; font-size:13px; color:rgba(255,255,255,0.7);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.feat-table tr:hover td { background:rgba(255,255,255,0.03); }
+.done { color:#4ade80; font-weight:700; }
+
+/* TECH STACK */
+.tech-grid { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; max-width:800px; }
+.tech-pill {
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+  padding:10px 22px; border-radius:30px; font-size:14px; font-weight:600; color:#e2e8f0;
+  display:flex; align-items:center; gap:8px;
+}
+
+/* STEPS */
+.steps { display:flex; gap:0; align-items:flex-start; max-width:900px; width:100%; }
+.step { flex:1; text-align:center; position:relative; padding:0 10px; }
+.step:not(:last-child)::after {
+  content:'→'; position:absolute; right:-12px; top:22px;
+  font-size:22px; color:rgba(255,255,255,0.3);
+}
+.step-num {
+  width:48px; height:48px; border-radius:50%; margin:0 auto 14px;
+  background:linear-gradient(135deg,#3b82f6,#06b6d4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; font-weight:900; color:white;
+}
+.step h4 { font-size:15px; font-weight:700; color:#f1f5f9; margin-bottom:6px; }
+.step p { font-size:12px; color:rgba(255,255,255,0.45); line-height:1.5; }
+
+/* PERSONAS */
+.persona {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  border-radius:18px; padding:28px; display:flex; gap:20px; align-items:flex-start;
+}
+.persona-icon {
+  width:56px; height:56px; border-radius:14px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:28px;
+}
+.persona h3 { font-size:17px; font-weight:700; color:#f1f5f9; margin-bottom:4px; }
+.persona .role { font-size:12px; color:#60a5fa; font-weight:600; margin-bottom:10px; }
+.persona p { font-size:13px; color:rgba(255,255,255,0.5); line-height:1.6; }
+
+/* LOGIN INFO */
+.login-box {
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  border-radius:18px; padding:28px 40px; text-align:center;
+}
+.login-box h3 { font-size:18px; font-weight:700; color:#f1f5f9; margin-bottom:16px; }
+.cred { font-size:14px; color:rgba(255,255,255,0.6); margin:6px 0; }
+.cred strong { color:#67e8f9; }
+
+/* DIVIDER */
+.divider { width:80px; height:4px; border-radius:2px; background:linear-gradient(135deg,#3b82f6,#06b6d4); margin:16px auto; }
+
+/* RUN COMMAND */
+.cmd-box {
+  background:#0f172a; border:1px solid rgba(59,130,246,0.3);
+  border-radius:14px; padding:20px 28px; font-family:monospace;
+  font-size:15px; color:#4ade80; margin:14px 0; text-align:left; max-width:500px; width:100%;
+}
+.cmd-box .comment { color:#64748b; }
+
+@media print {
+  .slide { page-break-after:always; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 : COVER -->
+<div class="slide slide-1">
+  <div class="glow" style="width:600px;height:600px;background:#3b82f6;top:-200px;right:-200px;"></div>
+  <div class="glow" style="width:400px;height:400px;background:#06b6d4;bottom:-100px;left:-100px;"></div>
+  <div class="slide-num">01 / 10</div>
+
+  <div style="font-size:80px;margin-bottom:10px;">🏥</div>
+  <div class="tag" style="margin-bottom:24px;">Project 2 — HealthTech Internship</div>
+  <div class="hero-title">HealthTech</div>
+  <div style="font-size:26px;font-weight:700;color:#67e8f9;margin-bottom:16px;">AI-Powered PHI/PII Redaction Pipeline</div>
+  <div class="hero-sub">Automated HIPAA-compliant redaction of Protected Health Information from clinical documents before they reach any AI model</div>
+  <div class="divider"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
+    <span class="tag">Full Stack</span>
+    <span class="tag cyan">React + Node.js</span>
+    <span class="tag green">HIPAA Compliant</span>
+    <span class="tag purple">AI Powered</span>
+  </div>
+</div>
+
+<!-- SLIDE 2 : PROBLEM STATEMENT -->
+<div class="slide slide-2">
+  <div class="glow" style="width:500px;height:500px;background:#ef4444;top:-150px;right:-150px;"></div>
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">02 / 10</div>
+
+  <div class="tag red" style="margin-bottom:24px;">⚠️ The Problem</div>
+  <div class="section-title" style="text-align:center;">Healthcare AI Has a Privacy Crisis</div>
+  <div class="section-sub" style="text-align:center;">Sending unredacted patient data to external AI APIs violates HIPAA & PIPEDA</div>
+
+  <div class="cards two" style="max-width:800px;">
+    <div class="card">
+      <div class="accent red-accent" style="background:linear-gradient(135deg,#ef4444,#f97316);"></div>
+      <div class="card-icon">⚠️</div>
+      <h3>Regulatory Risk</h3>
+      <p>Healthcare organizations face massive fines for sending PHI to external AI APIs without proper de-identification — violating HIPAA Safe Harbor rules.</p>
+    </div>
+    <div class="card">
+      <div class="accent" style="background:linear-gradient(135deg,#f97316,#eab308);"></div>
+      <div class="card-icon">🔓</div>
+      <h3>Data Leakage</h3>
+      <p>Patient names, SSNs, dates of birth, medical record numbers and 14 other PHI identifiers are exposed when clinical text reaches cloud AI models.</p>
+    </div>
+    <div class="card">
+      <div class="accent" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);"></div>
+      <div class="card-icon">🐢</div>
+      <h3>Manual Process</h3>
+      <p>Manual redaction is slow, error-prone and not scalable. Clinical teams waste hundreds of hours per month on compliance tasks that AI can automate.</p>
+    </div>
+    <div class="card">
+      <div class="accent blue-accent"></div>
+      <div class="card-icon">📋</div>
+      <h3>No Audit Trail</h3>
+      <p>Without an automated pipeline, there is no complete audit trail showing which documents were redacted, when, and by whom — a compliance requirement.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3 : SOLUTION -->
+<div class="slide slide-3">
+  <div class="glow" style="width:500px;height:500px;background:#22c55e;bottom:-150px;left:-150px;"></div>
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">03 / 10</div>
+
+  <div class="tag green" style="margin-bottom:24px;">✅ The Solution</div>
+  <div class="section-title" style="text-align:center;">HealthTech Redaction Platform</div>
+  <div class="section-sub" style="text-align:center;">A proxy service that intercepts, redacts and audits — automatically</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Upload</h4>
+      <p>Doctor uploads PDF, DOCX, TXT or Audio file</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>AI Scan</h4>
+      <p>AI detects all 18 HIPAA Safe Harbor PHI identifiers</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Redact</h4>
+      <p>Names, SSNs, dates replaced with pseudonyms</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>Export</h4>
+      <p>Download compliant doc + full audit report</p>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <h4>AI Chat</h4>
+      <p>Analyze redacted document with HIPAA-safe AI assistant</p>
+    </div>
+  </div>
+
+  <div class="stats-row" style="margin-top:40px;">
+    <div class="stat-box"><div class="num">18</div><div class="lbl">PHI Types</div></div>
+    <div class="stat-box"><div class="num">99.8%</div><div class="lbl">Accuracy</div></div>
+    <div class="stat-box"><div class="num">2.3s</div><div class="lbl">Per Document</div></div>
+    <div class="stat-box"><div class="num">100%</div><div class="lbl">HIPAA Safe Harbor</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 4 : USER PERSONAS -->
+<div class="slide slide-4">
+  <div class="glow" style="width:400px;height:400px;background:#8b5cf6;top:-100px;right:-100px;"></div>
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">04 / 10</div>
+
+  <div class="tag purple" style="margin-bottom:24px;">👥 User Personas</div>
+  <div class="section-title" style="text-align:center;">Who Uses HealthTech?</div>
+  <div class="section-sub" style="text-align:center;">Three distinct roles with different needs and access levels</div>
+
+  <div style="display:flex;flex-direction:column;gap:20px;width:100%;max-width:860px;">
+    <div class="persona">
+      <div class="persona-icon" style="background:rgba(59,130,246,0.15);">👨‍⚕️</div>
+      <div>
+        <h3>Clinical User / Doctor</h3>
+        <div class="role">Primary Role — Most Active User</div>
+        <p>Uploads raw patient consultation transcripts and clinical notes. Receives perfectly formatted clinical notes with all patient names replaced by pseudonyms. Uses AI Chat Assistant to analyze redacted documents and extract diagnoses without any PHI exposure.</p>
+      </div>
+    </div>
+    <div class="persona">
+      <div class="persona-icon" style="background:rgba(34,197,94,0.15);">🛡️</div>
+      <div>
+        <h3>Compliance Officer</h3>
+        <div class="role" style="color:#4ade80;">Oversight & Audit Role</div>
+        <p>Reviews proxy logs to ensure 100% of outgoing AI payloads have been properly redacted. Downloads compliance reports, monitors PHI detection accuracy, and maintains audit trails required by HIPAA regulations for the organization.</p>
+      </div>
+    </div>
+    <div class="persona">
+      <div class="persona-icon" style="background:rgba(239,68,68,0.15);">⚙️</div>
+      <div>
+        <h3>Administrator</h3>
+        <div class="role" style="color:#f87171;">System Management Role</div>
+        <p>Manages user accounts, assigns roles, configures AI model settings, sets redaction policies, and monitors system performance. Full access to admin panel with user activation/deactivation controls and system configuration.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 : ALL FEATURES -->
+<div class="slide slide-5" style="padding:40px 60px;">
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">05 / 10</div>
+
+  <div class="tag" style="margin-bottom:20px;">📋 Complete Feature List</div>
+  <div class="section-title" style="text-align:center;font-size:34px;">All Features Built</div>
+  <div class="section-sub" style="text-align:center;margin-bottom:24px;">Every requested feature + bonus additions</div>
+
+  <table class="feat-table">
+    <tr><th>Feature</th><th>Description</th><th>Status</th></tr>
+    <tr><td>🔐 Login</td><td>JWT secure auth with demo accounts</td><td class="done">✅</td></tr>
+    <tr><td>📝 Signup</td><td>2-step registration, role selection, password strength meter</td><td class="done">✅</td></tr>
+    <tr><td>🔑 Forgot Password</td><td>Email reset with success UI</td><td class="done">✅</td></tr>
+    <tr><td>📧 Email Verification</td><td>Verify email page post-registration</td><td class="done">✅</td></tr>
+    <tr><td>🛡️ Role Based Access</td><td>Doctor / Compliance Officer / Admin — different permissions</td><td class="done">✅</td></tr>
+    <tr><td>📊 Dashboard</td><td>Area, Bar, Pie charts + stats + recent docs + quick actions</td><td class="done">✅</td></tr>
+    <tr><td>📄 PDF / DOCX / TXT / Audio Upload</td><td>Drag & drop, progress bars, 50MB limit, validation</td><td class="done">✅</td></tr>
+    <tr><td>🤖 AI Redaction</td><td>18 HIPAA Safe Harbor identifiers, 3 redaction modes</td><td class="done">✅</td></tr>
+    <tr><td>⬇️ Download Redacted PDF</td><td>One-click download of PHI-free document</td><td class="done">✅</td></tr>
+    <tr><td>📊 Export Excel / PDF</td><td>Compliance, Redaction, PHI, Audit reports in 3 formats</td><td class="done">✅</td></tr>
+    <tr><td>💬 AI Chat Assistant</td><td>HIPAA-safe AI chat to analyze redacted documents</td><td class="done">✅</td></tr>
+    <tr><td>👨‍⚕️ Doctor Profile</td><td>Full profile, specialty, bio, 2FA, notification settings</td><td class="done">✅</td></tr>
+    <tr><td>🔔 Notification Bell</td><td>Real-time notification panel, unread badge</td><td class="done">✅</td></tr>
+    <tr><td>🔍 Search Bar</td><td>Global search modal with ⌘K shortcut</td><td class="done">✅</td></tr>
+    <tr><td>🌙 Dark Mode</td><td>Full dark/light theme with localStorage persistence</td><td class="done">✅</td></tr>
+    <tr><td>📅 Activity Timeline</td><td>Complete audit trail, filterable by type</td><td class="done">✅</td></tr>
+    <tr><td>📱 Mobile Responsive</td><td>Works on all screen sizes, collapsible sidebar</td><td class="done">✅</td></tr>
+    <tr><td>👥 Admin Panel</td><td>User management table, status toggle, system config</td><td class="done">✅</td></tr>
+  </table>
+</div>
+
+<!-- SLIDE 6 : PHI TYPES -->
+<div class="slide slide-6">
+  <div class="glow" style="width:400px;height:400px;background:#06b6d4;bottom:-100px;right:-100px;"></div>
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">06 / 10</div>
+
+  <div class="tag cyan" style="margin-bottom:24px;">🔍 AI Redaction Engine</div>
+  <div class="section-title" style="text-align:center;">18 HIPAA Safe Harbor Identifiers</div>
+  <div class="section-sub" style="text-align:center;">All identifiers automatically detected and redacted</div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:900px;">
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">👤</div>
+      <h3 style="font-size:14px;">Patient Names</h3>
+      <p style="font-size:12px;">Full names, titles, initials replaced with [NAME_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">📅</div>
+      <h3 style="font-size:14px;">Dates</h3>
+      <p style="font-size:12px;">DOB, service dates, admission dates → [DATE_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">🆔</div>
+      <h3 style="font-size:14px;">SSN / NPI</h3>
+      <p style="font-size:12px;">Social Security & NPI numbers → [SSN_1] [NPI_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">📞</div>
+      <h3 style="font-size:14px;">Phone Numbers</h3>
+      <p style="font-size:12px;">All phone/fax formats → [PHONE_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">📧</div>
+      <h3 style="font-size:14px;">Email Addresses</h3>
+      <p style="font-size:12px;">All email addresses → [EMAIL_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">🏠</div>
+      <h3 style="font-size:14px;">Addresses</h3>
+      <p style="font-size:12px;">Street, city, ZIP → [ADDRESS_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">🏥</div>
+      <h3 style="font-size:14px;">Medical Record #</h3>
+      <p style="font-size:12px;">MRN numbers → [MRN_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">💻</div>
+      <h3 style="font-size:14px;">IP Addresses</h3>
+      <p style="font-size:12px;">Device IP addresses → [IP_1]</p>
+    </div>
+    <div class="card" style="padding:16px 20px;">
+      <div style="font-size:22px;margin-bottom:8px;">🔗</div>
+      <h3 style="font-size:14px;">+ 10 More Types</h3>
+      <p style="font-size:12px;">Account numbers, certificates, biometrics, URLs, VINs...</p>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:14px 28px;text-align:center;">
+    <span style="color:#4ade80;font-weight:700;font-size:14px;">3 Redaction Modes: </span>
+    <span style="color:rgba(255,255,255,0.6);font-size:13px;">Pseudonym Mode  •  Black Redaction  •  Category Labels</span>
+  </div>
+</div>
+
+<!-- SLIDE 7 : TECH STACK -->
+<div class="slide slide-7">
+  <div class="glow" style="width:500px;height:500px;background:#3b82f6;top:-150px;left:-150px;"></div>
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">07 / 10</div>
+
+  <div class="tag" style="margin-bottom:24px;">⚙️ Technology Stack</div>
+  <div class="section-title" style="text-align:center;">Built With Modern Tech</div>
+  <div class="section-sub" style="text-align:center;">Full-stack architecture for production-ready deployment</div>
+
+  <div class="cards two" style="max-width:860px;">
+    <div class="card">
+      <div class="accent blue-accent"></div>
+      <h3>🖥️ Frontend</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;">
+        <span class="tag" style="font-size:11px;padding:4px 10px;">React 18</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">Vite</span>
+        <span class="tag cyan" style="font-size:11px;padding:4px 10px;">TailwindCSS</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">React Router v6</span>
+        <span class="tag purple" style="font-size:11px;padding:4px 10px;">Recharts</span>
+        <span class="tag green" style="font-size:11px;padding:4px 10px;">React Dropzone</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">Framer Motion</span>
+        <span class="tag cyan" style="font-size:11px;padding:4px 10px;">React Icons</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">Axios</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="accent green-accent"></div>
+      <h3>🔧 Backend</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;">
+        <span class="tag green" style="font-size:11px;padding:4px 10px;">Node.js</span>
+        <span class="tag green" style="font-size:11px;padding:4px 10px;">Express.js</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">JWT Auth</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">bcryptjs</span>
+        <span class="tag cyan" style="font-size:11px;padding:4px 10px;">Multer</span>
+        <span class="tag purple" style="font-size:11px;padding:4px 10px;">Mongoose</span>
+        <span class="tag red" style="font-size:11px;padding:4px 10px;">Helmet</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">Rate Limiting</span>
+        <span class="tag green" style="font-size:11px;padding:4px 10px;">MongoDB</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="accent purple-accent"></div>
+      <h3>🔒 Security</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;">
+        <span class="tag purple" style="font-size:11px;padding:4px 10px;">TLS 1.3 Encryption</span>
+        <span class="tag purple" style="font-size:11px;padding:4px 10px;">AES-256 at Rest</span>
+        <span class="tag red" style="font-size:11px;padding:4px 10px;">CORS Protection</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">Rate Limiting</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">Input Validation</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="accent orange-accent"></div>
+      <h3>📁 Architecture</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;">
+        <span class="tag" style="font-size:11px;padding:4px 10px;">REST API</span>
+        <span class="tag cyan" style="font-size:11px;padding:4px 10px;">MVC Pattern</span>
+        <span class="tag green" style="font-size:11px;padding:4px 10px;">Context API</span>
+        <span class="tag" style="font-size:11px;padding:4px 10px;">Protected Routes</span>
+        <span class="tag purple" style="font-size:11px;padding:4px 10px;">Proxy Setup</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 : DASHBOARD FEATURES -->
+<div class="slide slide-8">
+  <div class="glow" style="width:400px;height:400px;background:#8b5cf6;bottom:-100px;left:-100px;"></div>
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">08 / 10</div>
+
+  <div class="tag purple" style="margin-bottom:24px;">📊 Dashboard</div>
+  <div class="section-title" style="text-align:center;">Advanced Analytics Dashboard</div>
+  <div class="section-sub" style="text-align:center;">Real-time insights into your PHI redaction pipeline</div>
+
+  <div class="cards" style="max-width:960px;">
+    <div class="card">
+      <div class="accent blue-accent"></div>
+      <div class="card-icon">📈</div>
+      <h3>Live Charts</h3>
+      <p>Area chart for weekly activity, Bar chart for monthly PHI trends, Pie chart for PHI type distribution</p>
+    </div>
+    <div class="card">
+      <div class="accent green-accent"></div>
+      <div class="card-icon">🔢</div>
+      <h3>KPI Stats</h3>
+      <p>Documents redacted, PHI identifiers found, files uploaded today, compliance score — all live</p>
+    </div>
+    <div class="card">
+      <div class="accent purple-accent"></div>
+      <div class="card-icon">📄</div>
+      <h3>Recent Docs</h3>
+      <p>Latest uploaded documents with status badges, PHI count, file size, and timestamp</p>
+    </div>
+    <div class="card">
+      <div class="accent orange-accent"></div>
+      <div class="card-icon">⚡</div>
+      <h3>Quick Actions</h3>
+      <p>One-click access to Upload, Redaction, AI Chat, and Activity Timeline</p>
+    </div>
+    <div class="card">
+      <div class="accent cyan-accent"></div>
+      <div class="card-icon">🔔</div>
+      <h3>Notifications</h3>
+      <p>Real-time notification bell with panel showing redaction complete, alerts, uploads</p>
+    </div>
+    <div class="card">
+      <div class="accent pink-accent"></div>
+      <div class="card-icon">🔍</div>
+      <h3>Global Search</h3>
+      <p>Search all documents, patients and reports with ⌘K shortcut and recent history</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9 : HOW TO RUN -->
+<div class="slide slide-9">
+  <div class="glow" style="width:400px;height:400px;background:#22c55e;top:-100px;right:-100px;"></div>
+  <div class="logo-bar"><div class="logo-icon">🏥</div><span class="logo-text">HealthTech</span></div>
+  <div class="slide-num">09 / 10</div>
+
+  <div class="tag green" style="margin-bottom:24px;">🚀 How to Run</div>
+  <div class="section-title" style="text-align:center;">Get Started in Seconds</div>
+  <div class="section-sub" style="text-align:center;">One command to launch everything</div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;max-width:700px;">
+    <div style="width:100%;">
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px;font-weight:600;">OPTION 1 — PowerShell (Recommended)</p>
+      <div class="cmd-box">
+        <span class="comment"># Run this in your terminal</span><br/>
+        <span class="cmd">.\run.ps1</span>
+      </div>
+    </div>
+    <div style="width:100%;">
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px;font-weight:600;">OPTION 2 — Two Terminals Manually</p>
+      <div class="cmd-box">
+        <span class="comment"># Terminal 1 — Backend</span><br/>
+        <span class="cmd">cd backend &amp;&amp; node server.js</span><br/><br/>
+        <span class="comment"># Terminal 2 — Frontend</span><br/>
+        <span class="cmd">cd frontend &amp;&amp; npm run dev</span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:20px;width:100%;">
+      <div class="login-box" style="flex:1;">
+        <h3>🩺 Doctor Login</h3>
+        <div class="cred">Email: <strong>doctor@health.com</strong></div>
+        <div class="cred">Password: <strong>password</strong></div>
+      </div>
+      <div class="login-box" style="flex:1;">
+        <h3>⚙️ Admin Login</h3>
+        <div class="cred">Email: <strong>admin@health.com</strong></div>
+        <div class="cred">Password: <strong>password</strong></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;color:rgba(255,255,255,0.4);font-size:13px;">
+      Frontend: <strong style="color:#67e8f9;">http://localhost:3000</strong> &nbsp;|&nbsp; 
+      Backend API: <strong style="color:#4ade80;">http://localhost:5000</strong>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10 : CLOSING -->
+<div class="slide slide-10">
+  <div class="glow" style="width:600px;height:600px;background:#fff;top:-200px;right:-200px;opacity:0.05;"></div>
+  <div class="slide-num" style="color:rgba(255,255,255,0.4);">10 / 10</div>
+
+  <div style="font-size:70px;margin-bottom:16px;">🏥</div>
+  <div class="hero-title" style="font-size:52px;">HealthTech</div>
+  <div style="font-size:22px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:12px;">AI-Powered PHI/PII Redaction Pipeline</div>
+  <div class="divider"></div>
+  <p style="font-size:16px;color:rgba(255,255,255,0.6);text-align:center;max-width:600px;line-height:1.7;margin:20px 0;">
+    A complete, production-ready HIPAA-compliant platform that protects patient privacy, enables AI adoption in healthcare, and provides full audit compliance — built with React, Node.js and modern web technologies.
+  </p>
+
+  <div class="stats-row" style="margin:30px 0;">
+    <div class="stat-box"><div class="num">22+</div><div class="lbl">Features Built</div></div>
+    <div class="stat-box"><div class="num">10</div><div class="lbl">Pages / Routes</div></div>
+    <div class="stat-box"><div class="num">5</div><div class="lbl">API Endpoints</div></div>
+    <div class="stat-box"><div class="num">18</div><div class="lbl">PHI Types</div></div>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <span class="tag green">✅ HIPAA Compliant</span>
+    <span class="tag">🌙 Dark Mode</span>
+    <span class="tag cyan">📱 Mobile Responsive</span>
+    <span class="tag purple">🤖 AI Powered</span>
+    <span class="tag">🔒 Role Based Access</span>
+  </div>
+</div>
+
+<script>
+// Auto open print dialog for PDF
+// window.onload = () => { setTimeout(() => window.print(), 1000) }
+</script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-# HelthTech
+# 🏥 HealthTech — AI-Powered PHI/PII Redaction Pipeline
+
 <div align="center">
 
 [![HIPAA Compliant](https://img.shields.io/badge/HIPAA-Compliant-green?style=flat-square)](https://www.hhs.gov/hipaa)
